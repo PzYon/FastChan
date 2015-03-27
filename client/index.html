@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html data-ng-app="fastChanApp" data-ng-controller="rootController">
+	<head lang="en">
+		<meta charset="UTF-8">
+		<title>{{config.appName}} | {{channels.current ? channels.current.name : "Welcome"}}</title>
+		<script type="text/javascript" src="/scripts/packages/underscore/underscore.js"></script>
+		<script type="text/javascript" src="/scripts/packages/socket.io-client/socket.io.js"></script>
+		<script type="text/javascript" src="/scripts/packages/socketio-file-upload/client.js"></script>
+		<script type="text/javascript" src="/scripts/packages/angular/angular.js"></script>
+		<script type="text/javascript" src="/scripts/packages/angular-route/angular-route.js"></script>
+		<script type="text/javascript" src="/scripts/packages/ace/ace.js"></script>
+		<script type="text/javascript" src="/scripts/packages/angular-ui-ace/ui-ace.js"></script>
+		<script type="text/javascript" src="/scripts/app.js"></script>
+		<script type="text/javascript" src="/scripts/services.js"></script>
+		<script type="text/javascript" src="/scripts/directives.js"></script>
+		<script type="text/javascript" src="/scripts/controllers.js"></script>
+		<script type="text/javascript" src="/config/fastChanApp"></script>
+		<link rel="stylesheet" href="/styles/styles.css"/>
+	</head>
+	<body>
+		<h1><a href="#/">{{config.appName}}</a></h1>
+		<section class="channels">
+			<div class="overview">
+				<div class="container">
+					<ul class="list">
+						<li class="item"
+						    data-ng-repeat="c in channels.all track by $index"
+						    data-ng-class="{'selected': channels.current == c}">
+							<a href="#/channels/{{c.id}}" class="link">{{c.name}}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="current">
+				<div class="container">
+					<div ng-view></div>
+				</div>
+			</div>
+		</section>
+		<section class="info-bar">
+			<span data-ng-if="sessionInfo">
+				users: <span class="strong">{{sessionInfo.userCount}}</span>
+				<span class="separator"> | </span>
+				sockets: <span class="strong">{{sessionInfo.socketCount}}</span>
+				<span class="separator"> | </span>
+			</span>
+			username: <input type="text"
+			                 placeholder="What's your name?"
+			                 data-ng-model="userInfo.name"
+			                 data-ng-focus="active = true;"
+			                 data-ng-blur="active = false;userInfo.save();"
+			                 data-ng-class="{'strong': !active}"/>
+		</section>
+		<section class="status-bar" data-ng-if="status.message">
+			<span class="info" ng-bind="status.date | date:config.dateFormats.status"></span>:
+			{{status.message}}
+		</section>
+	</body>
+</html>

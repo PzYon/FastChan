@@ -1,0 +1,5 @@
+/node_modules
+/bower_components
+/client/scripts/packages
+/channels
+.idea

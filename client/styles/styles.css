@@ -1,0 +1,268 @@
+@font-face {
+    font-family: NotoSansRegular;
+    src: url("/fonts/NotoSans-Regular.ttf");
+}
+
+@font-face {
+    font-family: NotoSansRegular;
+    src: url("/fonts/NotoSans-Bold.ttf");
+    font-weight: bold;
+}
+
+html,
+textarea,
+input,
+button {
+    font-family: NotoSansRegular, sans-serif;
+    font-size: 16px;
+    color: #777;
+}
+
+body {
+    margin: 50px 15px;
+}
+
+a {
+    text-decoration: none;
+    color: #777;
+}
+
+a:hover {
+    color: #AAA;
+}
+
+textarea,
+input,
+button,
+.channels .current .files .file {
+    border: 1px solid #999;
+    background-color: #FFF;
+}
+
+button {
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.channels .current .files .file:hover,
+button:hover {
+    background-color: #EEE;
+}
+
+.channels {
+    margin-top: 20px;
+    display: table-row;
+}
+
+.channels .overview,
+.channels .current {
+    vertical-align: top;
+    display: table-cell;
+}
+
+.channels .overview {
+    position: relative;
+    z-index: 1;
+}
+
+.channels .overview .list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.channels .overview .list .item .link {
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle;
+    padding: 6px;
+    width: 15vw;
+    min-width: 100px;
+}
+
+.channels .overview .selected {
+    background-color: #EEE;
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+    border-left: 1px solid #999;
+}
+
+.channels .current {
+    background-color: #EEE;
+    border: 1px solid #999;
+    position: relative;
+    left: -1px;
+}
+
+.channels .current .container {
+    width: 70vw;
+    padding: 20px;
+}
+
+.channels .current input,
+.channels .current textarea {
+    width: 100%;
+    display: block;
+}
+
+.inline-input input {
+    display: inline !important;
+    width: inherit !important;
+}
+
+.channels .current .name {
+    margin-bottom: 5px;
+}
+
+.channels .current textarea {
+    max-width: calc(100% - 4px);
+    min-width: calc(100% - 4px);
+}
+
+.channels .current .messages {
+    padding: 10px 0;
+    border-spacing: 0 5px;
+    display: table;
+    width: 100%;
+}
+
+.channels .current .messages .message {
+    display: table-row;
+    border-spacing: 0;
+}
+
+.channels .current .messages .message:hover {
+    background-color: #DDD;
+}
+
+.channels .current .messages .message .info,
+.channels .current .messages .message .text {
+    display: table-cell;
+}
+
+.channels .current .messages .message .text {
+    white-space: pre-wrap;
+    width: 100%;
+}
+
+.channels .current .messages .message .info {
+    padding-right: 20px;
+}
+
+.dropZone {
+    display: block;
+    width: calc(100% - 10px);
+    cursor: default;
+    padding: 5px;
+    border: 1px solid #999;
+    color: #999;
+    background-color: #FFF;
+}
+
+.dropZone .placeholder {
+    text-align: center;
+}
+
+.channels .current .files .file {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 2px 5px 2px 5px;
+}
+
+.channels .current .files .file .text-preview {
+    height: 100px;
+    padding: 2px;
+}
+
+.channels .current .files .file .link {
+    padding: 0 !important;
+}
+
+.channels .current .files .file .image-preview {
+    height: 100px;
+    display: block;
+}
+
+.channels .current .files .file .image-preview:hover {
+    opacity: 0.9;
+}
+
+.info {
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.strong {
+    background-color: #eee;
+    border: none;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.info-bar,
+.status-bar {
+    z-index: 10;
+    position: fixed;
+    left: 0;
+    right: 0;
+    background-color: #EEE;
+    padding: 5px 15px;
+}
+
+.info-bar {
+    top: 0;
+    border-bottom: 1px solid #999;
+}
+
+.status-bar {
+    bottom: 0;
+    border-top: 1px solid #999;
+}
+
+.separator {
+    padding: 0 10px;
+}
+
+.editor-root {
+    width: 100%;
+    min-height: 1rem;
+}
+
+.ace-viewer {
+    width: 100%;
+    height: 100%;
+}
+
+.messages .message-viewer {
+    display: table-cell;
+    width: 100%;
+}
+
+@media screen and (max-width: 1000px) {
+    html,
+    textarea,
+    input,
+    button {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    html,
+    textarea,
+    input,
+    button {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    html,
+    textarea,
+    input,
+    button {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,17 @@
+<textarea class="editor-root"
+          data-ng-if="!messageEditor.newMessage.isCode"
+          data-ng-model="messageEditor.newMessage.text"></textarea>
+<div class="editor-root"
+     data-ng-if="messageEditor.newMessage.isCode"
+     data-ui-ace="{onLoad: aceLoaded, onChange: aceChanged}"></div>
+<div class="inline-input">
+	IsCode: <input type="checkbox" data-ng-model="messageEditor.newMessage.isCode"/>
+</div>
+<div class="inline-input">
+	<select name="languages"
+	        data-ng-if="messageEditor.newMessage.isCode"
+	        data-ng-model="messageEditor.newMessage.language"
+	        data-ng-options="language as language for language in config.supportedLanguages"
+	        data-ng-change="changeAceMode()">
+	</select>
+</div>

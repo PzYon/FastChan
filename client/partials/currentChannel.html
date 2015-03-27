@@ -1,0 +1,30 @@
+<input type="text" placeholder="What's the name of your channel?" class="name"
+       data-ng-model="channels.current.name"
+       data-ng-focus="active = true;"
+       data-ng-blur="active = false;channels.commit(channels.current);"
+       data-ng-class="{'strong': !active}"/>
+<div class="dropZone" id="dropZone">
+	<div class="placeholder" data-ng-if="!channels.current.files">drop files here...</div>
+	<div class="files">
+		<div data-ng-repeat="f in channels.current.files" class="file">
+			<a href="{{f.url}}" target="_blank" class="link"
+			   title="added by {{f.addedBy}} on {{f.date | date:config.dateFormats.status}}">
+				<span class="text-preview" data-ng-if="!f.isImage">{{f.name}}</span>
+				<img class="image-preview" data-ng-if="f.isImage" data-ng-src="{{f.url}}"/>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="messages">
+	<div class="message" data-ng-repeat="m in channels.current.messages track by $index">
+		<div class="info">
+			<span ng-bind="m.date | date:config.dateFormats.message"></span> | {{m.userName}}
+		</div>
+		<div data-message-viewer="m" class="message-viewer"></div>
+	</div>
+</div>
+<div data-message-editor="channels.current" class="message-editor"></div>
+<button type="button"
+        data-ng-click="channels.commitMessage(channels.current.newMessage);channels.current.newMessage=null;">
+	Send
+</button>
