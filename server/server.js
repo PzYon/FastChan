@@ -26,9 +26,8 @@ function onSocketConnection(socket) {
     });
 
     socket.on(config.events.addMessageToChannel, function (message) {
-        var author = socketManager.getUserNameForSocket(socket);
-        // todo: pass message object instead of separate parameters
-        var channel = channels.addMessageToChannel(message.channelId, message.text, author, message.isCode, message.language);
+        message.userName = socketManager.getUserNameForSocket(socket);
+        var channel = channels.addMessageToChannel(message);
         if (channel) {
             socketManager.sendBroadcastIncludingSelf(socket, config.events.updateChannel, channel);
         }

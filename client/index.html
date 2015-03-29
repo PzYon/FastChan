@@ -52,7 +52,7 @@
 			                 data-ng-class="{'strong': !active}"/>
 		</section>
 		<section class="status-bar" data-ng-if="status.message">
-			<span class="info" ng-bind="status.date | date:config.dateFormats.status"></span>:
+			<span class="info" ng-bind="status.date | date:config.gui.dateFormats.status"></span>:
 			{{status.message}}
 		</section>
 	</body>

@@ -10,7 +10,6 @@
             templateUrl: "partials/directives/messageEditor.html",
             link: function (scope, element) {
                 var elem = element;
-                var rems = 0.9;
                 var aceEditor;
 
                 if (!scope.messageEditor.newMessage) {
@@ -35,16 +34,11 @@
                     aceEditor.clearSelection();
                 };
 
-                scope.aceChanged = function (x) {
-                    scope.messageEditor.newMessage.text = x[1].getValue();
+                scope.aceChanged = function (args) {
+                    scope.messageEditor.newMessage.text = args[1].getValue();
 
                     var lineCount = aceEditor.session.getLength();
-                    var magicalFactor = rems * 1.2;
-
-                    // todo: i'm trying to get ace-container
-                    // because i failed miserably, i'm using this ugly piece of shit - jQuery-style!
-                    var magicElement = angular.element(elem.children()[0]);
-                    magicElement.css({"height": (lineCount * magicalFactor) + "rem"});
+                    scope.editorHeight = lineCount * config.gui.messages.lineHeight;
                 };
 
                 scope.changeAceMode = function () {
@@ -54,7 +48,7 @@
         };
     }]);
 
-    app.directive("messageViewer", function () {
+    app.directive("messageViewer", ["config", function (config) {
         return {
             scope: {
                 messageViewer: "="
@@ -62,7 +56,6 @@
             restrict: "A",
             templateUrl: "partials/directives/messageViewer.html",
             link: function (scope, element) {
-                var rems = 0.9;
                 var message = scope.messageViewer;
 
                 if (!message.isCode) {
@@ -78,7 +71,6 @@
                         showGutter: false,
                         highlightActiveLine: false,
                         readOnly: true,
-                        fontSize: rems + "rem",
                         mode: "ace/mode/" + message.language
                     });
 
@@ -86,10 +78,9 @@
                     editor.clearSelection();
 
                     var lineCount = editor.session.getLength();
-                    var magicalFactor = rems * 1.2;
-                    element.css({"height": (lineCount * magicalFactor) + "rem"});
+                    scope.editorHeight = lineCount * config.gui.messages.lineHeight;
                 };
             }
         };
-    });
+    }]);
 }(fastChanApp));

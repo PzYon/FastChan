@@ -33,15 +33,20 @@ module.exports = {
             error: "error"
         }
     },
-    dateFormats: {
-        status: "dd.MM.yy @ HH:mm:ss",
-        message: "EEE, HH:mm"
-    },
-    supportedLanguages: [
-        "html",
-        "css",
-        "javascript",
-        "json",
-        "csharp"
-    ]
+    gui: {
+        messages: {
+            lineHeight: 0.9,
+            supportedLanguages: [
+                "html",
+                "css",
+                "javascript",
+                "json",
+                "csharp"
+            ]
+        },
+        dateFormats: {
+            status: "dd.MM.yy @ HH:mm:ss",
+            message: "EEE, HH:mm"
+        }
+    }
 };

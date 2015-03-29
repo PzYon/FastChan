@@ -79,13 +79,17 @@ module.exports.addFile = function (channelId, fileName, userName) {
         date: new Date()
     });
 
-    channel = module.exports.addMessageToChannel(channel.id, "{added file " + fileName + "}", userName);
+    channel = module.exports.addMessageToChannel({
+        channelId: channel.id,
+        text: "{added file " + fileName + "}",
+        userName: userName
+    });
 
     return channel;
 };
 
-module.exports.addMessageToChannel = function (channelId, text, userName, isCode, language) {
-    var channel = module.exports.getById(channelId);
+module.exports.addMessageToChannel = function (message) {
+    var channel = module.exports.getById(message.channelId);
     if (!channel) {
         return;
     }
@@ -94,13 +98,9 @@ module.exports.addMessageToChannel = function (channelId, text, userName, isCode
         channel.messages = [];
     }
 
-    channel.messages.push({
-        date: new Date(),
-        userName: userName,
-        text: text,
-        isCode: isCode,
-        language: language
-    });
+    message.date = new Date();
+
+    channel.messages.push(message);
 
     return channel;
 };

@@ -2,16 +2,19 @@
           data-ng-if="!messageEditor.newMessage.isCode"
           data-ng-model="messageEditor.newMessage.text"></textarea>
 <div class="editor-root"
+     data-ng-style="{'height': editorHeight + 'rem'}"
      data-ng-if="messageEditor.newMessage.isCode"
      data-ui-ace="{onLoad: aceLoaded, onChange: aceChanged}"></div>
-<div class="inline-input">
-	IsCode: <input type="checkbox" data-ng-model="messageEditor.newMessage.isCode"/>
-</div>
-<div class="inline-input">
-	<select name="languages"
-	        data-ng-if="messageEditor.newMessage.isCode"
-	        data-ng-model="messageEditor.newMessage.language"
-	        data-ng-options="language as language for language in config.supportedLanguages"
-	        data-ng-change="changeAceMode()">
-	</select>
+<div class="editor-options">
+	<div class="inline-input">
+		is code: <input type="checkbox" data-ng-model="messageEditor.newMessage.isCode"/>
+	</div>
+	<div class="inline-input" data-ng-if="messageEditor.newMessage.isCode">
+		language:
+		<select name="languages"
+		        data-ng-model="messageEditor.newMessage.language"
+		        data-ng-options="language as language for language in config.gui.messages.supportedLanguages"
+		        data-ng-change="changeAceMode()">
+		</select>
+	</div>
 </div>

@@ -12,6 +12,7 @@
 html,
 textarea,
 input,
+select,
 button {
     font-family: NotoSansRegular, sans-serif;
     font-size: 16px;
@@ -34,6 +35,7 @@ a:hover {
 textarea,
 input,
 button,
+select,
 .channels .current .files .file {
     border: 1px solid #999;
     background-color: #FFF;
@@ -227,7 +229,7 @@ button:hover {
 
 .editor-root {
     width: 100%;
-    min-height: 1rem;
+    min-height: 3rem;
 }
 
 .ace-viewer {
@@ -240,10 +242,19 @@ button:hover {
     width: 100%;
 }
 
+.message-editor .editor-options {
+    margin: 5px 0;
+}
+
+.message-editor .inline-input {
+    display: inline-block;
+}
+
 @media screen and (max-width: 1000px) {
     html,
     textarea,
     input,
+    select,
     button {
         font-size: 15px;
     }
@@ -253,6 +264,7 @@ button:hover {
     html,
     textarea,
     input,
+    select,
     button {
         font-size: 14px;
     }
@@ -262,6 +274,7 @@ button:hover {
     html,
     textarea,
     input,
+    select,
     button {
         font-size: 12px;
     }

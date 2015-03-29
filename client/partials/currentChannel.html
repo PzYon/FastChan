@@ -8,7 +8,7 @@
 	<div class="files">
 		<div data-ng-repeat="f in channels.current.files" class="file">
 			<a href="{{f.url}}" target="_blank" class="link"
-			   title="added by {{f.addedBy}} on {{f.date | date:config.dateFormats.status}}">
+			   title="added by {{f.addedBy}} on {{f.date | date:config.gui.dateFormats.status}}">
 				<span class="text-preview" data-ng-if="!f.isImage">{{f.name}}</span>
 				<img class="image-preview" data-ng-if="f.isImage" data-ng-src="{{f.url}}"/>
 			</a>
@@ -18,7 +18,7 @@
 <div class="messages">
 	<div class="message" data-ng-repeat="m in channels.current.messages track by $index">
 		<div class="info">
-			<span ng-bind="m.date | date:config.dateFormats.message"></span> | {{m.userName}}
+			<span ng-bind="m.date | date:config.gui.dateFormats.message"></span> | {{m.userName}}
 		</div>
 		<div data-message-viewer="m" class="message-viewer"></div>
 	</div>
