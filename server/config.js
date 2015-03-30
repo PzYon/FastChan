@@ -35,7 +35,7 @@ module.exports = {
     },
     gui: {
         messages: {
-            lineHeight: 0.9,
+            lineHeight: 0.95,
             supportedLanguages: [
                 "html",
                 "css",

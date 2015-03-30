@@ -1,0 +1,12 @@
+<div class="dropZone" id="dropZone">
+	<div class="placeholder" data-ng-if="!channel.files">drop files here...</div>
+	<div class="files">
+		<div data-ng-repeat="f in channel.files" class="file">
+			<a href="{{f.url}}" target="_blank" class="link"
+			   title="added by {{f.addedBy}} on {{f.date | date:config.gui.dateFormats.status}}">
+				<span class="text-preview" data-ng-if="!f.isImage">{{f.name}}</span>
+				<img class="image-preview" data-ng-if="f.isImage" data-ng-src="{{f.url}}"/>
+			</a>
+		</div>
+	</div>
+</div>

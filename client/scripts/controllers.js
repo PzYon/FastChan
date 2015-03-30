@@ -6,10 +6,6 @@
             current: null,
             all: [],
             setCurrent: function (channel) {
-                if (channel && channel.id && (!this.current || channel.id !== this.current.id)) {
-                    socketService.registerFileUpload(channel.id);
-                }
-
                 this.current = channel;
             },
             setAll: function (allChannels) {

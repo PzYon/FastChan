@@ -8,15 +8,21 @@
                 messageEditor: "="
             },
             templateUrl: "partials/directives/messageEditor.html",
-            link: function (scope, element) {
-                var elem = element;
+            link: function (scope) {
                 var aceEditor;
+
+                scope.config = config;
 
                 if (!scope.messageEditor.newMessage) {
                     scope.messageEditor.newMessage = {};
                 }
 
-                scope.config = config;
+                scope.commitMessage = function () {
+                    var channels = scope.$parent.channels;
+                    channels.commitMessage(channels.current.newMessage);
+                    channels.current.newMessage = null;
+                    scope.editorHeight = 0;
+                };
 
                 scope.aceLoaded = function (editor) {
                     aceEditor = editor;
@@ -55,7 +61,7 @@
             },
             restrict: "A",
             templateUrl: "partials/directives/messageViewer.html",
-            link: function (scope, element) {
+            link: function (scope) {
                 var message = scope.messageViewer;
 
                 if (!message.isCode) {
@@ -80,6 +86,29 @@
                     var lineCount = editor.session.getLength();
                     scope.editorHeight = lineCount * config.gui.messages.lineHeight;
                 };
+            }
+        };
+    }]);
+
+    app.directive("fileDropper", ["socketService", function (socketService) {
+        function bindChannel(scope) {
+            scope.channel = scope.fileDropper;
+        }
+
+        return {
+            restrict: "A",
+            scope: {
+                fileDropper: "="
+            },
+            templateUrl: "partials/directives/fileDropper.html",
+            link: function (scope, element) {
+                bindChannel(scope);
+
+                scope.$watch("fileDropper", function () {
+                    bindChannel(scope);
+                });
+
+                socketService.registerFileUpload(scope.channel.id, element);
             }
         };
     }]);

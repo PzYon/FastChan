@@ -15,7 +15,7 @@ input,
 select,
 button {
     font-family: NotoSansRegular, sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     color: #777;
 }
 
@@ -142,6 +142,7 @@ button:hover {
 .channels .current .messages .message .info,
 .channels .current .messages .message .text {
     display: table-cell;
+    vertical-align: top;
 }
 
 .channels .current .messages .message .text {
@@ -248,34 +249,4 @@ button:hover {
 
 .message-editor .inline-input {
     display: inline-block;
-}
-
-@media screen and (max-width: 1000px) {
-    html,
-    textarea,
-    input,
-    select,
-    button {
-        font-size: 15px;
-    }
-}
-
-@media screen and (max-width: 800px) {
-    html,
-    textarea,
-    input,
-    select,
-    button {
-        font-size: 14px;
-    }
-}
-
-@media screen and (max-width: 600px) {
-    html,
-    textarea,
-    input,
-    select,
-    button {
-        font-size: 12px;
-    }
 }

@@ -15,6 +15,7 @@
 
     app.factory("socketService", ["$rootScope", "config", function ($rootScope, config) {
         var socket = io.connect();
+        var uploader = new SocketIOFileUpload(socket);
 
         return {
             on: function (eventName, callback) {
@@ -35,14 +36,13 @@
                     });
                 });
             },
-            registerFileUpload: function (channelId) {
-                var uploader = new SocketIOFileUpload(socket);
-
-                uploader.listenOnDrop(document.getElementById("dropZone"));
-
+            registerFileUpload: function (channelId, element) {
                 uploader.addEventListener(config.fileUpload.events.start, function (event) {
                     event.file.meta[config.fileUpload.channelId] = channelId;
                 });
+
+                // todo: how many times is linked called? is this the correct place?
+                uploader.listenOnDrop(element[0]);
             }
         };
     }]);
