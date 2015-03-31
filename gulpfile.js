@@ -21,6 +21,7 @@ gulp.task("cleanLibs", function () {
 
 gulp.task("copyLibs", ["cleanLibs"], function () {
     gulp.src([
+        bowerDir + "date-utils/lib/date-utils.js",
         bowerDir + "angular/angular.js",
         bowerDir + "angular-route/angular-route.js",
         bowerDir + "underscore/underscore.js",

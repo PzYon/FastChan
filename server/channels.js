@@ -6,36 +6,9 @@ var uuid = require("node-uuid");
 var _ = require("underscore");
 
 var config = require("./config");
+var testData = require("./testData");
 
-var allChannels = [
-    {
-        id: uuid.v4(),
-        name: "A first channel",
-        messages: [
-            {
-                date: new Date(),
-                userName: "alpha",
-                text: "Some content text.."
-            }
-        ]
-    },
-    {
-        id: uuid.v4(),
-        name: "Another channel",
-        messages: [
-            {
-                date: new Date(),
-                userName: "alpha",
-                text: "Some content text.."
-            },
-            {
-                date: new Date(),
-                userName: "B3ta",
-                text: "Additional content text.."
-            }
-        ]
-    }
-];
+var allChannels = testData.channels;
 
 module.exports.getAll = function () {
     return allChannels;
