@@ -5,9 +5,9 @@
        data-ng-class="{'strong': !active}"/>
 <div data-file-dropper="channels.current"></div>
 <div class="messages">
-	<div class="message" data-ng-repeat="m in channels.current.messages track by $index">
-		<div class="info">
-			<span ng-bind="m.date | date:config.gui.dateFormats.message"></span> | {{m.userName}}
+	<div class="message" data-ng-repeat="m in channels.current.messages | orderBy: 'date' track by $index">
+		<div class="info" title="{{m.date | date:config.gui.dateFormats.messageTooltip}} by {{m.userName}}">
+			<span ng-bind="m.date | literalDate:config.gui.dateFormats.message"></span> | {{m.userName}}
 		</div>
 		<div data-message-viewer="m" class="message-viewer"></div>
 	</div>

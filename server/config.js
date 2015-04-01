@@ -46,7 +46,33 @@ module.exports = {
         },
         dateFormats: {
             status: "dd.MM.yy @ HH:mm:ss",
-            message: "EEE, HH:mm"
+            messageTooltip: "dd.MM.yy @ HH:mm:ss",
+            message: [
+                {
+                    offset: {minutes: 3},
+                    prefix: "now"
+                },
+                {
+                    offset: {minutes: 10},
+                    prefix: "last minutes"
+                },
+                {
+                    offset: "today",
+                    format: "HH:mm"
+                },
+                {
+                    offset: "yesterday",
+                    format: "HH:mm",
+                    prefix: "yesterday,"
+                },
+                {
+                    offset: {days: 7},
+                    format: "EEEE, HH:mm"
+                },
+                {
+                    format: "dd.MM.yy"
+                }
+            ]
         }
     }
 };
