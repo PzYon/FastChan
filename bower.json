@@ -13,12 +13,12 @@
     "tests"
   ],
   "dependencies": {
-    "angular-route": "~1.3.15",
-    "angular-ui-ace": "~0.2.3",
-    "socketio-file-upload": "~0.3.3",
-    "underscore": "~1.8.2",
-    "angular": "~1.3.15",
-    "socket.io-client": "~1.3.5",
-    "date-utils": "~1.2.16"
+    "angular-route": null,
+    "angular-ui-ace": null,
+    "socketio-file-upload": null,
+    "underscore": null,
+    "angular": null,
+    "socket.io-client": null,
+    "date-utils": null
   }
 }
