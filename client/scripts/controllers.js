@@ -23,14 +23,10 @@
             commit: function (channel) {
                 socketService.emit(config.events.updateChannel, channel);
             },
-            commitMessage: function (message) {
-                socketService.emit(config.events.addMessageToChannel, {
-                    channelId: this.current.id,
-                    text: message.text,
-                    isCode: message.isCode,
-                    language: message.language
-                    // todo: solve all of this using 'this.current...' instead of injecting message?
-                });
+            commitMessage: function () {
+                this.current.newMessage.channelId = this.current.id;
+                socketService.emit(config.events.addMessageToChannel, this.current.newMessage);
+                this.current.newMessage = null;
             }
         };
 

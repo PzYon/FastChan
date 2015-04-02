@@ -40,8 +40,6 @@
             }
 
             var dateValue = new Date(timestamp);
-
-            // todo: could we use underscore here?
             for (var i = 0; i < definitions.length; i++) {
                 var definition = definitions[i];
                 if (!definition.offset) {

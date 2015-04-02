@@ -15,7 +15,7 @@
 
     app.factory("socketService", ["$rootScope", "config", function ($rootScope, config) {
         var socket = io.connect();
-        var uploader = new SocketIOFileUpload(socket);
+        var uploader;
 
         return {
             on: function (eventName, callback) {
@@ -36,13 +36,24 @@
                     });
                 });
             },
-            registerFileUpload: function (channelId, element) {
+            ensureFileUpload: function ensureFileUpload(channelId, element) {
+                if (ensureFileUpload.channelId === channelId) {
+                    return;
+                }
+
+                ensureFileUpload.channelId = channelId;
+
+                uploader = new SocketIOFileUpload(socket);
+                uploader.listenOnDrop(element[0]);
+
                 uploader.addEventListener(config.fileUpload.events.start, function (event) {
                     event.file.meta[config.fileUpload.channelId] = channelId;
                 });
-
-                // todo: how many times is linked called? is this the correct place?
-                uploader.listenOnDrop(element[0]);
+            },
+            removeFileUpload: function () {
+                if (uploader) {
+                    uploader.destroy();
+                }
             }
         };
     }]);

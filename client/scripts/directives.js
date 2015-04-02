@@ -18,9 +18,7 @@
                 }
 
                 scope.commitMessage = function () {
-                    var channels = scope.$parent.channels;
-                    channels.commitMessage(channels.current.newMessage);
-                    channels.current.newMessage = null;
+                    scope.$parent.channels.commitMessage();
                     scope.editorHeight = 0;
                 };
 
@@ -102,13 +100,14 @@
             },
             templateUrl: "partials/directives/fileDropper.html",
             link: function (scope, element) {
-                bindChannel(scope);
-
                 scope.$watch("fileDropper", function () {
                     bindChannel(scope);
+                    socketService.ensureFileUpload(scope.channel.id, element);
                 });
 
-                socketService.registerFileUpload(scope.channel.id, element);
+                scope.$on("$destroy", function () {
+                    socketService.removeFileUpload(element);
+                });
             }
         };
     }]);
