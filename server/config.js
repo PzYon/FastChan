@@ -49,12 +49,12 @@ module.exports = {
             messageTooltip: "dd.MM.yy @ HH:mm:ss",
             message: [
                 {
-                    offset: {minutes: 3},
-                    prefix: "now"
+                    offset: {minutes: 2},
+                    prefix: "just now"
                 },
                 {
                     offset: {minutes: 10},
-                    prefix: "last minutes"
+                    prefix: "some minutes ago"
                 },
                 {
                     offset: "today",

@@ -10,6 +10,13 @@ var testData = require("./testData");
 
 var allChannels = testData.channels;
 
+function setLastModified(channel, date) {
+    if (channel) {
+        channel.lastModified = date || new Date();
+    }
+    return channel;
+}
+
 module.exports.getAll = function () {
     return allChannels;
 };
@@ -26,6 +33,8 @@ module.exports.updateChannel = function (channel) {
     if (!channel) {
         return;
     }
+
+    channel = setLastModified(channel);
 
     var existingChannel = module.exports.getById(channel.id);
     if (existingChannel) {
@@ -52,6 +61,9 @@ module.exports.addFile = function (channelId, fileName, userName) {
         date: new Date()
     });
 
+    // there's no need to update the lastModified date here,
+    // as this is done in the addMessageToChannel function
+
     channel = module.exports.addMessageToChannel({
         channelId: channel.id,
         text: "{added file " + fileName + "}",
@@ -71,7 +83,9 @@ module.exports.addMessageToChannel = function (message) {
         channel.messages = [];
     }
 
-    message.date = new Date();
+    var now = new Date();
+    message.date = now;
+    channel = setLastModified(channel, now);
 
     channel.messages.push(message);
 

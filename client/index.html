@@ -21,9 +21,11 @@
 				<div class="container">
 					<ul class="list">
 						<li class="item"
-						    data-ng-repeat="c in channels.all track by $index"
+						    data-ng-repeat="c in channels.all | orderBy:'-lastModified' track by $index "
 						    data-ng-class="{'selected': channels.current == c}">
-							<a href="#/channels/{{c.id}}" class="link">{{c.name}}</a>
+							<a href="#/channels/{{c.id}}" class="link">
+								{{c.name}} [<span ng-bind="c.lastModified | literalDate:config.gui.dateFormats.message:'unknown'"></span>]
+							</a>
 						</li>
 					</ul>
 				</div>

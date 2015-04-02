@@ -33,9 +33,15 @@
             return segments.join(" ");
         }
 
-        return function (dateString, definitions) {
-            var dateValue = new Date(dateString);
+        return function (dateString, definitions, fallback) {
+            var timestamp = Date.parse(dateString);
+            if (isNaN(timestamp)) {
+                return fallback || "";
+            }
 
+            var dateValue = new Date(timestamp);
+
+            // todo: could we use underscore here?
             for (var i = 0; i < definitions.length; i++) {
                 var definition = definitions[i];
                 if (!definition.offset) {
