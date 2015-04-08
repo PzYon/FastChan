@@ -6,7 +6,7 @@ var fastChanApp = (function () {
     app.config(function ($routeProvider) {
         $routeProvider.when("/channels/:channelId", {
             controller: "channelController",
-            templateUrl: "partials/currentChannel.html"
+            templateUrl: "partials/channel.html"
         }).when("/", {
             controller: "rootController",
             templateUrl: "partials/start.html"

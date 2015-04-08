@@ -102,6 +102,13 @@
 
             // config object needs to be on scope in order to be able to use it in filter directives
             $scope.config = config;
+
+            $scope.$on("$routeChangeSuccess", function (event, current) {
+                // we need to ensure there is no channel set when we return from a specific channel
+                if (!current.params.channelId) {
+                    $scope.channels.setCurrent(null);
+                }
+            });
         }
 
         initialize();
