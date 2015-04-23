@@ -13,6 +13,12 @@
 
                 scope.config = config;
 
+                if (!scope.messageEditor) {
+                    // we are too early, nothing to do yet.. maybe the routing change (to the current channel)
+                    // is too late and should somehow be done earlier [$location.url()]
+                    return;
+                }
+
                 if (!scope.messageEditor.newMessage) {
                     scope.messageEditor.newMessage = {};
                 }

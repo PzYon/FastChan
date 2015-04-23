@@ -45,6 +45,21 @@ module.exports.updateChannel = function (channel) {
     }
 };
 
+module.exports.deleteChannel = function (channel) {
+    if (!channel) {
+        return;
+    }
+
+    var existingChannel = module.exports.getById(channel.id);
+    if (!existingChannel) {
+        return;
+    }
+
+    allChannels.splice(allChannels.indexOf(existingChannel), 1);
+
+    // do we need to delete stuff from file system as well?
+};
+
 module.exports.addFile = function (channelId, fileName, userName) {
     var url = "/channels/" + channelId + "/" + fileName;
     var channel = module.exports.getById(channelId);

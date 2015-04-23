@@ -3,6 +3,7 @@
        data-ng-focus="active = true;"
        data-ng-blur="active = false;channels.commit(channels.current);"
        data-ng-class="{'strong': !active}"/>
+<img src="/images/trash.png" class="trash icon" data-ng-click="channels.delete(channels.current);"/>
 <div data-file-dropper="channels.current"></div>
 <div class="messages">
 	<div class="message" data-ng-repeat="m in channels.current.messages | orderBy: 'date' track by $index">

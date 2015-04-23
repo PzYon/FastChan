@@ -19,6 +19,7 @@ module.exports = {
         connect: "connect",
         disconnect: "disconnect",
         addMessageToChannel: "addMessageToChannel",
+        deleteChannel: "deleteChannel",
         updateChannel: "updateChannel",
         updateSessionInfo: "updateSessionInfo",
         updateUserInfo: "updateUserInfo",

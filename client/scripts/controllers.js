@@ -1,7 +1,7 @@
 (function (app) {
     "use strict";
 
-    function RootController($scope, config, socketService, localStorageService) {
+    function RootController($scope, $location, config, socketService, localStorageService) {
         $scope.channels = {
             current: null,
             all: [],
@@ -19,6 +19,9 @@
 
                 this.commit({name: $scope.newChannelName});
                 delete $scope.newChannelName;
+            },
+            delete: function (channel) {
+                socketService.emit(config.events.deleteChannel, channel);
             },
             commit: function (channel) {
                 socketService.emit(config.events.updateChannel, channel);
@@ -44,8 +47,9 @@
         };
 
         $scope.status = {
-            set: function (message) {
-                this.message = message;
+            set: function () {
+                var args = Array.prototype.slice.call(arguments);
+                this.message = args.length > 1 ? args.join("") : args[0];
                 this.date = new Date();
             }
         };
@@ -62,10 +66,10 @@
                 var existingChannel = _.findWhere($scope.channels.all, {id: channel.id});
 
                 if (!existingChannel) {
-                    $scope.status.set("A new channel with the name '" + channel.name + "' was created.");
+                    $scope.status.set("A new channel with the name '", channel.name, "' was created.");
                     $scope.channels.all.push(channel);
                 } else {
-                    $scope.status.set("The channel with the name '" + channel.name + "' was updated.");
+                    $scope.status.set("The channel with the name '", channel.name, "' was updated.");
 
                     var existingIndex = _.findIndex($scope.channels.all, existingChannel);
                     if (existingIndex > -1) {
@@ -76,6 +80,22 @@
                         $scope.channels.setCurrent(channel);
                     }
                 }
+            });
+
+            service.on(config.events.deleteChannel, function (toDelete) {
+                angular.forEach($scope.channels.all, function (c, index) {
+                    if (c.id === toDelete.id) {
+                        $scope.channels.all.splice(index, 1);
+
+                        if (c.id === $scope.channels.current.id) {
+                            $location.url("/");
+                        }
+
+                        $scope.status.set("The channel with the name '", toDelete.name, "' has been deleted.")
+
+                        return;
+                    }
+                });
             });
 
             service.on(config.events.updateSessionInfo, function (sessionInfo) {
@@ -90,7 +110,7 @@
                 $scope.status.set("The server has decided to go offline.. Or there might be other issues.. ;)");
             });
 
-            $scope.status.set("Welcome to " + config.appName + ", have fun!");
+            $scope.status.set("Welcome to ", config.appName, ", have fun!");
         }
 
         function initialize() {
@@ -114,7 +134,7 @@
         initialize();
     }
 
-    RootController.$inject = ["$scope", "config", "socketService", "localStorageService"];
+    RootController.$inject = ["$scope", "$location", "config", "socketService", "localStorageService"];
     app.controller("rootController", RootController);
 
     function ChannelController($scope, $routeParams, $location) {

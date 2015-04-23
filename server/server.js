@@ -25,6 +25,11 @@ function onSocketConnection(socket) {
         socketManager.sendBroadcastIncludingSelf(socket, config.events.updateChannel, channel);
     });
 
+    socket.on(config.events.deleteChannel, function (channel) {
+        channels.deleteChannel(channel);
+        socketManager.sendBroadcastIncludingSelf(socket, config.events.deleteChannel, channel);
+    });
+
     socket.on(config.events.addMessageToChannel, function (message) {
         message.userName = socketManager.getUserNameForSocket(socket);
         var channel = channels.addMessageToChannel(message);

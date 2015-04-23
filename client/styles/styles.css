@@ -116,6 +116,8 @@ button:hover {
 
 .channels .current .name {
     margin-bottom: 5px;
+    width: calc(100% - 30px); /* ~ 1 icon */
+    display: inline-block;
 }
 
 .channels .current textarea {
@@ -190,6 +192,10 @@ button:hover {
 
 .channels .current .files .file .image-preview:hover {
     opacity: 0.9;
+}
+
+.channels .current .container .trash.icon {
+    cursor: pointer;
 }
 
 .info {
