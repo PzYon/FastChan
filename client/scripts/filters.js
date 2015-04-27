@@ -2,6 +2,7 @@
     "use strict";
 
     app.filter("literalDate", ["$filter", function ($filter) {
+
         function getOffsetDate(offset) {
             if (typeof offset === "string") {
                 switch (offset) {
@@ -57,4 +58,5 @@
             return dateValue;
         };
     }]);
+
 }(fastChanApp));

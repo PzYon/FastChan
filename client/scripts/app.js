@@ -16,4 +16,5 @@ var fastChanApp = (function () {
     });
 
     return app;
+
 }());

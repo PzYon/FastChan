@@ -1,19 +1,65 @@
 (function (app) {
     "use strict";
 
+    app.factory("channelService", ["config", "socketService", function (config, socketService) {
+
+        return {
+            current: null,
+
+            all: [],
+
+            setCurrent: function (channel) {
+                this.current = channel;
+            },
+
+            setAll: function (allChannels) {
+                this.all = allChannels;
+            },
+
+            commitNew: function ($event, newChannelName) {
+                var enterKey = 13;
+                if (!newChannelName || ($event && $event.type !== "click" && $event.keyCode !== enterKey)) {
+                    return;
+                }
+
+                this.commit({name: newChannelName});
+                //delete newChannelName;
+            },
+
+            delete: function (channel) {
+                socketService.emit(config.events.deleteChannel, channel);
+            },
+
+            commit: function (channel) {
+                socketService.emit(config.events.updateChannel, channel);
+            },
+
+            commitMessage: function (channel) {
+                channel.newMessage.channelId = channel.id;
+                socketService.emit(config.events.addMessageToChannel, channel.newMessage);
+                channel.newMessage = null;
+            }
+        };
+
+    }]);
+
     app.factory("localStorageService", [function () {
+
         var key = "fastChanApp";
         return {
             save: function (value) {
                 window.localStorage.setItem(key, angular.toJson(value));
             },
+
             load: function () {
                 return angular.fromJson(window.localStorage.getItem(key));
             }
         };
+
     }]);
 
     app.factory("socketService", ["$rootScope", "config", function ($rootScope, config) {
+
         var socket = io.connect();
         var uploader;
 
@@ -26,6 +72,7 @@
                     });
                 });
             },
+
             emit: function (eventName, data, callback) {
                 socket.emit(eventName, data, function () {
                     var args = arguments;
@@ -36,6 +83,7 @@
                     });
                 });
             },
+
             ensureFileUpload: function ensureFileUpload(channelId, element) {
                 if (ensureFileUpload.channelId === channelId) {
                     return;
@@ -50,11 +98,14 @@
                     event.file.meta[config.fileUpload.channelId] = channelId;
                 });
             },
+
             removeFileUpload: function () {
                 if (uploader) {
                     uploader.destroy();
                 }
             }
         };
+
     }]);
+
 }(fastChanApp));

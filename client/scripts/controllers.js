@@ -1,37 +1,8 @@
 (function (app) {
     "use strict";
 
-    function RootController($scope, $location, config, socketService, localStorageService) {
-        $scope.channels = {
-            current: null,
-            all: [],
-            setCurrent: function (channel) {
-                this.current = channel;
-            },
-            setAll: function (allChannels) {
-                this.all = allChannels;
-            },
-            commitNew: function ($event) {
-                var enterKey = 13;
-                if (!$scope.newChannelName || ($event && $event.keyCode !== enterKey)) {
-                    return;
-                }
-
-                this.commit({name: $scope.newChannelName});
-                delete $scope.newChannelName;
-            },
-            delete: function (channel) {
-                socketService.emit(config.events.deleteChannel, channel);
-            },
-            commit: function (channel) {
-                socketService.emit(config.events.updateChannel, channel);
-            },
-            commitMessage: function () {
-                this.current.newMessage.channelId = this.current.id;
-                socketService.emit(config.events.addMessageToChannel, this.current.newMessage);
-                this.current.newMessage = null;
-            }
-        };
+    function RootController($scope, $location, config, channelService, socketService, localStorageService) {
+        $scope.channels = channelService;
 
         $scope.userInfo = {
             initialize: function () {
@@ -56,38 +27,38 @@
 
         function initializeSocketService(service) {
             service.on(config.events.initialize, function (channels) {
-                $scope.channels.setAll(channels);
+                channelService.setAll(channels);
 
                 // this is a test.. not sure it works!
                 socketService.emit(config.events.updateUserInfo, $scope.userInfo.name);
             });
 
             service.on(config.events.updateChannel, function (channel) {
-                var existingChannel = _.findWhere($scope.channels.all, {id: channel.id});
+                var existingChannel = _.findWhere(channelService.all, {id: channel.id});
 
                 if (!existingChannel) {
                     $scope.status.set("A new channel with the name '", channel.name, "' was created.");
-                    $scope.channels.all.push(channel);
+                    channelService.all.push(channel);
                 } else {
                     $scope.status.set("The channel with the name '", channel.name, "' was updated.");
 
-                    var existingIndex = _.findIndex($scope.channels.all, existingChannel);
+                    var existingIndex = _.findIndex(channelService.all, existingChannel);
                     if (existingIndex > -1) {
-                        $scope.channels.all[existingIndex] = channel;
+                        channelService.all[existingIndex] = channel;
                     }
 
-                    if ($scope.channels.current && $scope.channels.current.id === channel.id) {
-                        $scope.channels.setCurrent(channel);
+                    if (channelService.current && channelService.current.id === channel.id) {
+                        channelService.setCurrent(channel);
                     }
                 }
             });
 
             service.on(config.events.deleteChannel, function (toDelete) {
-                angular.forEach($scope.channels.all, function (c, index) {
+                angular.forEach(channelService.all, function (c, index) {
                     if (c.id === toDelete.id) {
-                        $scope.channels.all.splice(index, 1);
+                        channelService.all.splice(index, 1);
 
-                        if (c.id === $scope.channels.current.id) {
+                        if (c.id === channelService.current.id) {
                             $location.url("/");
                         }
 
@@ -126,7 +97,7 @@
             $scope.$on("$routeChangeSuccess", function (event, current) {
                 // we need to ensure there is no channel set when we return from a specific channel
                 if (!current.params.channelId) {
-                    $scope.channels.setCurrent(null);
+                    channelService.setCurrent(null);
                 }
             });
         }
@@ -134,16 +105,18 @@
         initialize();
     }
 
-    RootController.$inject = ["$scope", "$location", "config", "socketService", "localStorageService"];
+    RootController.$inject = ["$scope", "$location", "config", "channelService", "socketService", "localStorageService"];
     app.controller("rootController", RootController);
 
-    function ChannelController($scope, $routeParams, $location) {
+    function ChannelController($scope, $routeParams, $location, channelService) {
+        $scope.channels = channelService;
+
         $scope.$watch("channels.all", function (newValue) {
             if (newValue && newValue.length) {
                 var channel = _.findWhere(newValue, {id: $routeParams.channelId});
 
                 // we always set the current channel (if its undefined or not)
-                $scope.channels.setCurrent(channel);
+                channelService.setCurrent(channel);
 
                 if (!channel) {
                     $location.url("/");
@@ -152,6 +125,7 @@
         });
     }
 
-    ChannelController.$inject = ["$scope", "$routeParams", "$location"];
+    ChannelController.$inject = ["$scope", "$routeParams", "$location", "channelService"];
     app.controller("channelController", ChannelController);
+
 }(fastChanApp));

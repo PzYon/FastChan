@@ -1,5 +1,5 @@
-<span data-ng-if="!messageViewer.isCode" class="text">{{messageViewer.text}}</span>
+<span data-ng-if="!message.isCode" class="text">{{message.text}}</span>
 <div class="ace-viewer"
      data-ng-style="{'height': editorHeight + 'rem'}"
-     data-ng-if="messageViewer.isCode"
+     data-ng-if="message.isCode"
      data-ui-ace="{onLoad: aceLoaded}"></div>

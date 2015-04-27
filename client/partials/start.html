@@ -1,7 +1,7 @@
 <section class="create">
 	<div>
-		<input type="text" placeholder="Specify the name of a new channel.." data-ng-keyup="channels.commitNew($event)"
+		<input type="text" placeholder="Specify the name of a new channel.." data-ng-keyup="channels.commitNew($event, newChannelName)"
 		       data-ng-model="newChannelName"/>
-		<button type="button" data-ng-click="channels.commitNew()">Create</button>
+		<button type="button" data-ng-click="channels.commitNew($event, newChannelName)">Create</button>
 	</div>
 </section>

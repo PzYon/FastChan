@@ -1,21 +1,21 @@
 <textarea class="editor-root"
-          data-ng-if="!messageEditor.newMessage.isCode"
-          data-ng-model="messageEditor.newMessage.text"></textarea>
+          data-ng-if="!channel.newMessage.isCode"
+          data-ng-model="channel.newMessage.text"></textarea>
 <div class="editor-root"
      data-ng-style="{'height': editorHeight + 'rem'}"
-     data-ng-if="messageEditor.newMessage.isCode"
+     data-ng-if="channel.newMessage.isCode"
      data-ui-ace="{onLoad: aceLoaded, onChange: aceChanged}"></div>
 <div class="editor-options">
 	<div class="inline-input">
-		is code: <input type="checkbox" data-ng-model="messageEditor.newMessage.isCode"/>
+		is code: <input type="checkbox" data-ng-model="channel.newMessage.isCode"/>
 	</div>
-	<div class="inline-input" data-ng-if="messageEditor.newMessage.isCode">
+	<div class="inline-input" data-ng-if="channel.newMessage.isCode">
 		language:
 		<select name="languages"
-		        data-ng-model="messageEditor.newMessage.language"
+		        data-ng-model="channel.newMessage.language"
 		        data-ng-options="language as language for language in config.gui.messages.supportedLanguages"
 		        data-ng-change="changeAceMode()">
 		</select>
 	</div>
 </div>
-<button type="button" data-ng-click="commitMessage()">Send</button>
+<button type="button" data-ng-click="commitMessage(channel);">Send</button>
