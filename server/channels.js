@@ -8,7 +8,10 @@ var _ = require("underscore");
 var config = require("./config");
 var testData = require("./testData");
 
-var allChannels = testData.channels;
+var allChannels = testData.getData(50, 50);
+
+// uncomment following line in order to have lots of data
+// testData.addLotsOfData(allChannels, 50, 50);
 
 function setLastModified(channel, date) {
     if (channel) {
