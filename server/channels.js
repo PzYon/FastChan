@@ -10,9 +10,6 @@ var testData = require("./testData");
 
 var allChannels = testData.getData(50, 50);
 
-// uncomment following line in order to have lots of data
-// testData.addLotsOfData(allChannels, 50, 50);
-
 function setLastModified(channel, date) {
     if (channel) {
         channel.lastModified = date || new Date();
@@ -102,6 +99,7 @@ module.exports.addMessageToChannel = function (message) {
     }
 
     var now = new Date();
+
     message.date = now;
     channel = setLastModified(channel, now);
 

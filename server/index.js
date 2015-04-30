@@ -6,4 +6,4 @@ var config = require("./config");
 
 server.start(router.route, config.port);
 
-console.log("Server is listening on port '" + config.port + "'");
+console.log("Server is listening on port '" + config.port + "'.");

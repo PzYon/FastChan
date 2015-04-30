@@ -29,7 +29,6 @@ module.exports.remove = function (socket) {
     module.exports.sendBroadcastIncludingSelf(socket, config.events.updateSessionInfo, getSessionInfo());
 };
 
-
 module.exports.count = function () {
     return sockets.length;
 };
